@@ -23,33 +23,6 @@ $db = get_db_connect();
 
 
 $user = login_as($db, $name, $password);
-/*
-  function login_as($db, $name, $password){
-    $user = get_user_by_name($db, $name);
-    if($user === false || $user['password'] !== $password){
-      return false;
-    }
-    set_session('user_id', $user['user_id']);
-    return $user;
-  }
-
-  function get_user_by_name($db, $name){
-    $sql = "
-      SELECT
-        user_id, 
-        name,
-        password,
-        type
-      FROM
-        users
-      WHERE
-        name = '{$name}'
-      LIMIT 1
-    ";
-
-    return fetch_query($db, $sql);
-  }
-*/
 if( $user === false){
   set_error('ログインに失敗しました。');
   redirect_to(LOGIN_URL);

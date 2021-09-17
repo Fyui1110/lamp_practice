@@ -31,22 +31,6 @@ $item_id = get_post('item_id');
 
 // ？
 if(destroy_item($db, $item_id) === true){
-/*
-  function destroy_item($db, $item_id){
-    $item = get_item($db, $item_id);
-    if($item === false){
-      return false;
-    }
-    $db->beginTransaction();
-    if(delete_item($db, $item['item_id'])
-      && delete_image($item['image'])){
-      $db->commit();
-      return true;
-    }
-    $db->rollback();
-    return false;
-  }
-*/
   set_message('商品を削除しました。');
 } else {
   set_error('商品削除に失敗しました。');

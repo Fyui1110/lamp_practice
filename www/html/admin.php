@@ -28,32 +28,6 @@ if(is_admin($user) === false){
 
 // ステータスがopen(=1)の商品データの取得
 $items = get_all_items($db);
-/*
-  function get_all_items($db){
-    return get_items($db);
-  }
-
-  function get_items($db, $is_open = false){
-    $sql = '
-      SELECT
-        item_id, 
-        name,
-        stock,
-        price,
-        image,
-        status
-      FROM
-        items
-    ';
-    if($is_open === true){
-      $sql .= '
-        WHERE status = 1
-      ';
-    }
-
-    return fetch_all_query($db, $sql);
-  }
-*/
 
 // テンプレートファイル読み込み
 include_once VIEW_PATH . '/admin_view.php';

@@ -23,29 +23,6 @@ $user = get_login_user($db);
 
 // 商品一覧の取得
 $items = get_open_items($db);
-/*
-  function get_open_items($db){
-    return get_items($db, true);
-  }
-
-  function get_item($db, $item_id){
-    $sql = "
-      SELECT
-        item_id, 
-        name,
-        stock,
-        price,
-        image,
-        status
-      FROM
-        items
-      WHERE
-        item_id = {$item_id}
-    ";
-
-    return fetch_query($db, $sql);
-  }
-*/
 
 // テンプレートファイル読み込み
 include_once VIEW_PATH . 'index_view.php';
