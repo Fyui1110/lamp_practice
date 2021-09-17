@@ -1,17 +1,24 @@
 <?php
+// 定数ファイルを読み込み
 require_once '../conf/const.php';
+
+// 関数ファイルを読み込み
 require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 
+// セッションの開始
 session_start();
 
+// user_idが空白でなければLOGIN_URLに移動する
 if(is_logined() === true){
   redirect_to(HOME_URL);
 }
 
-$name = get_post('name');
+// セットされていれば代入する
+$name     = get_post('name');
 $password = get_post('password');
 
+// データベースに接続
 $db = get_db_connect();
 
 
@@ -25,4 +32,6 @@ set_message('ログインしました。');
 if ($user['type'] === USER_TYPE_ADMIN){
   redirect_to(ADMIN_URL);
 }
+
+// HOME_URLに移動する
 redirect_to(HOME_URL);
