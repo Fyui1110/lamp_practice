@@ -22,6 +22,7 @@ $password_confirmation = get_post('password_confirmation');
 // データベースに接続
 $db = get_db_connect();
 
+// ユーザーの登録
 try{
   $result = regist_user($db, $name, $password, $password_confirmation);
   if( $result=== false){
@@ -34,6 +35,7 @@ try{
 }
 set_message('ユーザー登録が完了しました。');
 
+// ？
 login_as($db, $name, $password);
 
 // HOME_URLに移動する

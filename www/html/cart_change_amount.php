@@ -28,20 +28,6 @@ $amount  = get_post('amount');
 
 // カート内の商品の数量を変更
 if(update_cart_amount($db, $cart_id, $amount)){
-/*
-  function update_cart_amount($db, $cart_id, $amount){
-    $sql = "
-      UPDATE
-        carts
-      SET
-        amount = {$amount}
-      WHERE
-        cart_id = {$cart_id}
-      LIMIT 1
-    ";
-    return execute_query($db, $sql);
-  }
-*/
   set_message('購入数を更新しました。');
 } else {
   set_error('購入数の更新に失敗しました。');

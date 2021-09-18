@@ -34,7 +34,7 @@ $changes_to = get_post('changes_to');
 
 // changes_toがopenであればステータスをITEM_STATUS_OPENに変更する
 // changes_toがcloseであればステータスをITEM_STATUS_CLOSEに変更する
-// ？LIMIT 1
+// LIMIT 1 = 1つだけ取得する
 if($changes_to === 'open'){
   update_item_status($db, $item_id, ITEM_STATUS_OPEN);
   set_message('ステータスを変更しました。');
@@ -47,4 +47,3 @@ if($changes_to === 'open'){
 
 // ADMIN_URLに移動する
 redirect_to(ADMIN_URL);
-}

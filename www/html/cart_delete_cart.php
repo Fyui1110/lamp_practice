@@ -27,19 +27,6 @@ $cart_id = get_post('cart_id');
 
 // カートの中身を削除する
 if(delete_cart($db, $cart_id)){
-/*
-  function delete_cart($db, $cart_id){
-    $sql = "
-      DELETE FROM
-        carts
-      WHERE
-        cart_id = {$cart_id}
-      LIMIT 1
-    ";
-
-    return execute_query($db, $sql);
-  }
-*/
   set_message('カートを削除しました。');
 } else {
   set_error('カートの削除に失敗しました。');

@@ -21,13 +21,14 @@ $password = get_post('password');
 // データベースに接続
 $db = get_db_connect();
 
-
+// ユーザーとパスワードが一致していなければログインしない
 $user = login_as($db, $name, $password);
 if( $user === false){
   set_error('ログインに失敗しました。');
   redirect_to(LOGIN_URL);
 }
 
+// $userがUSER_TYPE_ADMINであればADMIN_URLに移動する
 set_message('ログインしました。');
 if ($user['type'] === USER_TYPE_ADMIN){
   redirect_to(ADMIN_URL);
