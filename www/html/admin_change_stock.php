@@ -21,6 +21,7 @@ $db = get_db_connect();
 // ログインしているユーザーIDの取得
 $user = get_login_user($db);
 
+// $userがUSER_TYPE_ADMINでなければLOGIN_URLに移動する
 if(is_admin($user) === false){
   redirect_to(LOGIN_URL);
 }
