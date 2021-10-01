@@ -14,6 +14,15 @@ if(is_logined() === true){
   redirect_to(HOME_URL);
 }
 
+// トークンのチェック
+$token  = get_post('token');
+if (is_valid_csrf_token($token) === false){
+  redirect_to(LOGIN_URL);
+}
+
+// トークンの破棄
+unset($_SESSION['csrf_token']);
+
 // セットされていれば代入する
 $name     = get_post('name');
 $password = get_post('password');

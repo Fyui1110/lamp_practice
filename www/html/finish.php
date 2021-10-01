@@ -16,6 +16,15 @@ if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
 
+// トークンのチェック
+$token  = get_post('token');
+if (is_valid_csrf_token($token) === false){
+  redirect_to(LOGIN_URL);
+}
+
+// トークンの破棄
+unset($_SESSION['csrf_token']);
+
 // データベースに接続
 $db = get_db_connect();
 
@@ -35,6 +44,9 @@ if(purchase_carts($db, $carts) === false){
 
 // 合計金額の計算
 $total_price = sum_carts($carts);
+
+// トークンの生成
+$token = get_csrf_token();
 
 // テンプレートファイル読み込み
 include_once '../view/finish_view.php';
