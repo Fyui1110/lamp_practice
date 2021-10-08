@@ -16,6 +16,8 @@ function get_db_connect(){
   return $dbh;
 }
 
+// SQL文の実行(データが一つの場合)
+// 失敗した場合はfalseを返す
 function fetch_query($db, $sql, $params = array()){
   try{
     $statement = $db->prepare($sql);
@@ -27,6 +29,8 @@ function fetch_query($db, $sql, $params = array()){
   return false;
 }
 
+// SQL文の実行(全ての結果行を含む配列を返す)
+// 失敗した場合はfalseを返す
 function fetch_all_query($db, $sql, $params = array()){
   try{
     $statement = $db->prepare($sql);
@@ -38,6 +42,8 @@ function fetch_all_query($db, $sql, $params = array()){
   return false;
 }
 
+// SQL文の実行
+// 失敗した場合はfalseを返す
 function execute_query($db, $sql, $params = array()){
   try{
     $statement = $db->prepare($sql);
