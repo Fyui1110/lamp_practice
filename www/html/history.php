@@ -7,6 +7,7 @@ require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
+require_once MODEL_PATH . 'history.php';
 
 // セッションの開始
 session_start();
@@ -16,30 +17,23 @@ if(is_logined() === false){
   redirect_to(LOGIN_URL);
 }
 
-// トークンのチェック
-$token  = get_post('token');
-if (is_valid_csrf_token($token) === false){
-  redirect_to(LOGIN_URL);
-}
-
-// トークンの破棄
-unset($_SESSION['csrf_token']);
-
 // データベースに接続
 $db = get_db_connect();
 
 // ログインしているユーザーIDの取得
 $user = get_login_user($db);
 
-// item_idがセットされていれば$item_idに代入する
-$item_id = get_post('item_id');
-
-// 商品をカートに追加
-if(add_cart($db,$user['user_id'], $item_id)){
-  set_message('カートに商品を追加しました。');
-} else {
-  set_error('カートの更新に失敗しました。');
+// 購入履歴情報の取得
+if (is_admin($user) === false){
+  $histories = get_user_history($db, $user['user_id']);
+}else{
+  $histories = get_all_history($db);
 }
 
-// HOME_URLに移動する
-redirect_to(HOME_URL);
+// トークンの生成
+$token = get_csrf_token();
+
+// テンプレートファイル読み込み
+include_once VIEW_PATH . 'history_view.php';
+
+// order_id、$token、購入日時、合計金額をviewで送信

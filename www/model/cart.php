@@ -26,18 +26,6 @@ function get_user_carts($db, $user_id){
   ";
   // SQL文の実行
   return fetch_all_query($db, $sql, array(':user_id' => $user_id));
-  /*
-    function fetch_all_query($db, $sql, $params = array()){
-      try{
-        $statement = $db->prepare($sql);
-        $statement->execute($params);
-        return $statement->fetchAll();
-      }catch(PDOException $e){
-        set_error('データ取得に失敗しました。');
-      }
-      return false;
-    }
-*/
 }
 
 //？
@@ -167,11 +155,12 @@ function validate_cart_purchase($carts){
     set_error('カートに商品が入っていません。');
     return false;
   }
-  // 未公開の商品がある場合または在庫数が購入数より少ない場合、エラーメッセージを追加しfalseを返す
   foreach($carts as $cart){
+    // 未公開の商品がある場合、エラーメッセージを追加しfalseを返す
     if(is_open($cart) === false){ //is_openの戻り値はtrueかfalse
       set_error($cart['name'] . 'は現在購入できません。');
     }
+    // 在庫数が購入数より少ない場合、エラーメッセージを追加しfalseを返す
     if($cart['stock'] - $cart['amount'] < 0){
       set_error($cart['name'] . 'は在庫が足りません。購入可能数:' . $cart['stock']);
     }
@@ -198,6 +187,7 @@ function add_history($db, $user_id) {
   return execute_query($db, $sql, array(':user_id' => $user_id));
 }
 
+// 明細テーブルへ追加するSQL文
 function add_detail($db, $order_id, $item_id, $amount, $order_price) {
   $sql = "
     INSERT INTO
