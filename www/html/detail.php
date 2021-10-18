@@ -7,6 +7,7 @@ require_once MODEL_PATH . 'functions.php';
 require_once MODEL_PATH . 'user.php';
 require_once MODEL_PATH . 'item.php';
 require_once MODEL_PATH . 'cart.php';
+require_once MODEL_PATH . 'detail.php';
 
 // セッションの開始
 session_start();
@@ -31,15 +32,23 @@ $db = get_db_connect();
 // ログインしているユーザーIDの取得
 $user = get_login_user($db);
 
-// item_idがセットされていれば$item_idに代入する
-$item_id = get_post('item_id');
+// 送信されてきたデータの取得
+// order_id、購入日時、合計金額
+$order_id    = get_post('order_id');
+$order_dated = get_post('order_dated');
+$total = get_post('total');
 
-// 商品をカートに追加
-if(add_cart($db,$user['user_id'], $item_id)){
-  set_message('カートに商品を追加しました。');
-} else {
-  set_error('カートの更新に失敗しました。');
+$check_user = check_user($db, $order_id);
+
+if (is_admin($user) === false && $check_user['user_id'] !== $user['user_id']){
+  set_error("不正な処理が行われました");
+  redirect_to(LOGIN_URL);
 }
 
-// HOME_URLに移動する
-redirect_to(HOME_URL);
+// 購入明細情報の取得
+// $db、order_idを引数に渡す
+//「商品名」「購入時の商品価格」 「購入数」「小計」
+$details = get_user_detail($db, $order_id);
+
+// テンプレートファイル読み込み
+include_once VIEW_PATH . 'detail_view.php';

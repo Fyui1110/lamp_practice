@@ -34,11 +34,9 @@ $user = get_login_user($db);
 // カート情報の取得
 $carts = get_user_carts($db, $user['user_id']);
 
-// カートに商品がなければ？
-// カートに商品があれば、カート内の商品を削除する
+// 商品を購入する際にエラーがあればメッセージを追加し、CART_URLに移動する
 if(purchase_carts($db, $carts) === false){
   set_error('商品が購入できませんでした。');
-  // CART_URLに移動する
   redirect_to(CART_URL);
 } 
 
