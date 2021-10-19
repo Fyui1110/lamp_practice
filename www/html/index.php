@@ -24,6 +24,12 @@ $user = get_login_user($db);
 // 商品一覧の取得
 $items = get_open_items($db);
 
+// ランキングの表示
+$ranking = item_ranking($db);
+
+// ランキング順位
+$ranking_no = 1;
+
 // トークンの生成
 $token = get_csrf_token();
 

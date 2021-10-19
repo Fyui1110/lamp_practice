@@ -43,6 +43,31 @@
       <?php } ?>
       </div>
     </div>
+    <h2>ランキング</h2>
+    <?php if(count($ranking) > 0){ ?>
+      <table class="table table-bordered">
+        <thead class="thead-light">
+          <tr>
+            <th>順位</th>
+            <th>商品名</th>
+            <th>金額</th>
+            <th>購入数</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach($ranking as $item){ ?>
+          <tr>
+            <td><?php print(h(number_format($ranking_no++))); ?></td>
+            <td><?php print(h($item['name'])); ?></td>
+            <td><?php print(h(number_format($item['price']))); ?>円</td>
+            <td><?php print(h(number_format($item['total']))); ?>個</td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    <?php } else { ?>
+      <p>ランキングはありません。</p>
+    <?php } ?> 
   </div>
   
 </body>
